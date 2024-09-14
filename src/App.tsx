@@ -24,8 +24,8 @@ const App = () => {
 
   const Home = lazy(() => import('@pages/main/Home'));
   const PetSitterHome = lazy(() => import('@pages/main/PetSitterHome'));
-  const Login = lazy(() => import('@pages/login/Login'));
-  const Signup = lazy(() => import('@pages/login/Signup'));
+  const Login = lazy(() => import('@pages/account/login/Login'));
+  const Signup = lazy(() => import('@pages/account/Signup'));
   const Reviews = lazy(() => import('@pages/main/Reviews'));
   const Mypage = lazy(() => import('@pages/mypage/Mypage'));
   const EditUserProfile = lazy(() => import('@pages/mypage/EditUserProfile'));
@@ -41,7 +41,7 @@ const App = () => {
   const CreateReview = lazy(() => import('@pages/care/CreateReview'));
   const CreateJournal = lazy(() => import('@pages/care/CreateJournal'));
   const SitterSchedule = lazy(() => import('@pages/mypage/SitterSchedule'));
-  const OAuthBranch = lazy(() => import('@pages/login/OAuthBranch'));
+  const OAuthBranch = lazy(() => import('@pages/account/OAuthBranch'));
   const ViewJournal = lazy(() => import('@pages/common/ViewJournal'));
   const QnA = lazy(() => import('@pages/main/QnA'));
   const NotFound = lazy(() => import('@pages/common/404'));
