@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-import { ErrorMessage, SubmitButtonStyle } from './Login';
+import { ErrorMessage, SubmitButtonStyle } from './login/Login.styles';
 import GoogleOAuthButton from '@components/buttons/OAuthButton';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
