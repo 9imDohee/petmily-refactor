@@ -1,8 +1,10 @@
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import useLogin from './hooks/useLogin';
 import HomeLogo from '@components/common/HomeLogo';
 import InputField from '@components/common/InputField';
+import LoadingSpinner from '@components/common/LoadingSpinner';
 import GoogleOAuthButton from '@components/buttons/OAuthButton';
 import {
   MainContainer,
@@ -12,11 +14,7 @@ import {
   ButtonWrapper,
   SubmitButton,
   SignupLink,
-  LoadingContainer,
-  Spinner,
 } from './Login.styles';
-import useLogin from './hooks/useLogin';
-import useGuestLogin from './hooks/useGuestLogin';
 
 const schema = yup.object().shape({
   email: yup.string().email('이메일 형식을 지켜주세요.').required('ID를 입력해주세요.'),
@@ -39,7 +37,6 @@ const Login = () => {
   });
 
   const { isLoginLoading, onSubmit } = useLogin();
-  const { isGuestLoginLoading, handleGuestLogin } = useGuestLogin();
 
   return (
     <MainContainer>
@@ -51,20 +48,9 @@ const Login = () => {
             <InputField name="password" type="password" register={register} errors={errors} placeholder="비밀번호" />
           </InputWrapper>
           <ButtonWrapper>
-            <SubmitButton type="submit">
-              {isLoginLoading && (
-                <LoadingContainer>
-                  <Spinner />
-                </LoadingContainer>
-              )}
-              로 그 인
-            </SubmitButton>
-            <SubmitButton type="button" onClick={handleGuestLogin} disabled={isGuestLoginLoading}>
-              {isGuestLoginLoading && (
-                <LoadingContainer>
-                  <Spinner />
-                </LoadingContainer>
-              )}
+            <SubmitButton type="submit">{isLoginLoading && <LoadingSpinner />}로 그 인</SubmitButton>
+            <SubmitButton type="button" onClick={onSubmit} disabled={isLoginLoading}>
+              {isLoginLoading && <LoadingSpinner />}
               Guest 로 그 인
             </SubmitButton>
             <GoogleOAuthButton>Log in with Google</GoogleOAuthButton>
