@@ -15,7 +15,6 @@ export const LoginContainer = styled.div`
   margin-top: 100px;
   max-width: 360px;
 `;
-
 export const LoginForm = styled.form`
   display: flex;
   flex-direction: column;
@@ -25,8 +24,19 @@ export const LoginForm = styled.form`
   gap: 16px;
 `;
 
-export const SubmitButtonStyle = styled.button`
-  margin-top: 12px;
+export const InputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`;
+
+export const ButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+`;
+
+export const SubmitButton = styled.button`
   height: 32px;
   width: 100%;
   border-radius: 8px;
@@ -47,8 +57,8 @@ export const SubmitButtonStyle = styled.button`
   }
 `;
 
-export const CustomLink = styled(Link)`
-  margin-top: 12px;
+export const SignupLink = styled(Link)`
+  margin-top: 20px;
   color: ${({ theme }) => theme.colors.mainBlue};
   font-size: ${({ theme }) => theme.fontSize.s14h21};
   text-decoration-line: none;
