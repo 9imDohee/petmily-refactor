@@ -82,9 +82,9 @@ const Home = () => {
   }, []);
 
   // ---
-  useEffect(() => {
-    axios.get(`${apiUrl}/reviews`).then((response) => console.log(response));
-  }, []);
+  // useEffect(() => {
+  //   axios.get(`${apiUrl}/reviews`).then((response) => console.log(response));
+  // }, []);
 
   return (
     <>

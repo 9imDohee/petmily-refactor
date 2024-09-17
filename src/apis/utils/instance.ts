@@ -1,5 +1,5 @@
-import axios from "axios";
-import { getCookieValue } from "hooks/getCookie";
+import axios from 'axios';
+import { getCookieValue } from 'hooks/getCookie';
 
 const BASE_URL = process.env.REACT_APP_API_URL as string;
 
@@ -16,7 +16,7 @@ const authAPI = (url: string, options?: any) => {
 
   instance.interceptors.request.use(
     (config) => {
-      const token = getCookieValue("access_token");
+      const token = getCookieValue('access_token');
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
@@ -24,7 +24,7 @@ const authAPI = (url: string, options?: any) => {
     },
     (error) => {
       return Promise.reject(error);
-    }
+    },
   );
 
   return instance;
