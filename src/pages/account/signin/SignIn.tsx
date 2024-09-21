@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import useLogin from './hooks/useLogin';
+import useSignIn from './hooks/useSignIn';
 import HomeLogo from '@components/common/HomeLogo';
 import InputField from '@components/common/InputField';
 import LoadingSpinner from '@components/common/LoadingSpinner';
@@ -14,7 +14,7 @@ import {
   ButtonWrapper,
   SubmitButton,
   SignupLink,
-} from './Login.styles';
+} from './SignIn.styles';
 
 const schema = yup.object().shape({
   email: yup.string().email('이메일 형식을 지켜주세요.').required('ID를 입력해주세요.'),
@@ -27,7 +27,7 @@ const schema = yup.object().shape({
 
 type IFormLoginInputs = yup.InferType<typeof schema>;
 
-const Login = () => {
+const SignIn = () => {
   const {
     register,
     handleSubmit,
@@ -36,7 +36,7 @@ const Login = () => {
     resolver: yupResolver(schema),
   });
 
-  const { isLoginLoading, onSubmit } = useLogin();
+  const { isLoginLoading, onSubmit } = useSignIn();
 
   return (
     <MainContainer>
@@ -48,7 +48,7 @@ const Login = () => {
             <InputField name="password" type="password" register={register} errors={errors} placeholder="비밀번호" />
           </InputWrapper>
           <ButtonWrapper>
-            <SubmitButton type="submit">{isLoginLoading && <LoadingSpinner />}로 그 인</SubmitButton>
+            <SubmitButton type="submit">{isLoginLoading ? <LoadingSpinner /> : '로 그 인'}</SubmitButton>
             <SubmitButton type="button" onClick={onSubmit} disabled={isLoginLoading}>
               {isLoginLoading && <LoadingSpinner />}
               Guest 로 그 인
@@ -62,4 +62,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignIn;

@@ -3,25 +3,39 @@ import { UseFormRegister, FieldValues, Path } from 'react-hook-form';
 
 interface InputFieldProps<TFormInput extends FieldValues> {
   name: Path<TFormInput>;
+  type?: React.HTMLInputTypeAttribute;
   register: UseFormRegister<TFormInput>;
   errors: Record<string, any>;
-  type?: React.HTMLInputTypeAttribute;
   placeholder?: string;
+  value?: string;
+  onClick?: React.MouseEventHandler<HTMLInputElement>;
+  onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>;
 }
 
 const InputField = <TFormInput extends FieldValues>({
   name,
+  type = 'text',
   register,
   errors,
-  type = 'text',
   placeholder = '',
+  value,
+  onClick,
+  onKeyDown,
 }: InputFieldProps<TFormInput>) => {
   const errorMessage = errors[name]?.message;
   const hasError = !!errorMessage;
 
   return (
     <InputWrapper>
-      <StyledInput type={type} placeholder={placeholder} {...register(name)} error={hasError} />
+      <StyledInput
+        type={type}
+        placeholder={placeholder}
+        {...register(name)}
+        error={hasError}
+        value={value}
+        onClick={onClick}
+        onKeyDown={onKeyDown}
+      />
       {hasError && <ErrorMessage>{errorMessage}</ErrorMessage>}
     </InputWrapper>
   );

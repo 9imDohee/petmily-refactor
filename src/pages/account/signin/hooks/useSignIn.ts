@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { login } from 'redux/slice/userSlice';
 import { signIn } from 'apis/api/user';
 
-export function useLogin() {
+export function useSignIn() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -23,4 +23,4 @@ export function useLogin() {
   return { isLoginLoading, onSubmit };
 }
 
-export default useLogin;
+export default useSignIn;
