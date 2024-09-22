@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
+import useSignIn from './hooks/useSignIn';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import useSignIn from './hooks/useSignIn';
 import HomeLogo from '@components/common/HomeLogo';
 import InputField from '@components/common/InputField';
 import LoadingSpinner from '@components/common/LoadingSpinner';
@@ -36,7 +36,7 @@ const SignIn = () => {
     resolver: yupResolver(schema),
   });
 
-  const { isLoginLoading, onSubmit } = useSignIn();
+  const { isSignInLoading, onSubmit } = useSignIn();
 
   return (
     <MainContainer>
@@ -48,9 +48,9 @@ const SignIn = () => {
             <InputField name="password" type="password" register={register} errors={errors} placeholder="비밀번호" />
           </InputWrapper>
           <ButtonWrapper>
-            <SubmitButton type="submit">{isLoginLoading ? <LoadingSpinner /> : '로 그 인'}</SubmitButton>
-            <SubmitButton type="button" onClick={onSubmit} disabled={isLoginLoading}>
-              {isLoginLoading && <LoadingSpinner />}
+            <SubmitButton type="submit">{isSignInLoading ? <LoadingSpinner /> : '로 그 인'}</SubmitButton>
+            <SubmitButton type="button" onClick={onSubmit} disabled={isSignInLoading}>
+              {isSignInLoading && <LoadingSpinner />}
               Guest 로 그 인
             </SubmitButton>
             <GoogleOAuthButton>Log in with Google</GoogleOAuthButton>

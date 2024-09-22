@@ -1,14 +1,13 @@
-import { SubmitButton } from '../signin/SignIn.styles';
-import GoogleOAuthButton from '@components/buttons/OAuthButton';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
-import { Modal, Sheet } from '@mui/joy';
-import DaumPostcode from 'react-daum-postcode';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import useSignUp from './hooks/useSignUp';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import InputField from '@components/common/InputField';
+import { Modal, Sheet } from '@mui/joy';
+import DaumPostcode from 'react-daum-postcode';
+import { SubmitButton } from '../signin/SignIn.styles';
+import GoogleOAuthButton from '@components/buttons/OAuthButton';
 import LoadingSpinner from '@components/common/LoadingSpinner';
 import {
   MainContainer,
@@ -16,13 +15,11 @@ import {
   TitleWrapper,
   SignUpForm,
   InputWrapper,
-  ButtonContainer,
+  ButtonWrapper,
   CheckBoxWrapper,
   CheckBoxLabel,
   LoadingContainer,
 } from './Signup.styles';
-
-const apiUrl = process.env.REACT_APP_API_URL;
 
 const schema = yup.object().shape({
   name: yup
@@ -48,24 +45,23 @@ const schema = yup.object().shape({
     .matches(/^(?=.*[A-Za-z])(?=.*\d)/, '최소 1개의 영문자와 1개의 숫자를 반드시 포함해야 합니다. ')
     .required('비밀번호는 필수입니다.'),
   passwordConfirm: yup.lazy(() => {
-    return yup.string().oneOf([yup.ref('password'), ''], '비밀번호가 서로 다릅니다.');
+    return yup.string().oneOf([yup.ref('password'), ''], '비밀번호가 서로 다름.');
   }),
   photo: yup.string(),
   petsitterBoolean: yup.boolean(),
 });
+
 type IFormSignupInputs = yup.InferType<typeof schema>;
 
 const Signup = () => {
-  const navigate = useNavigate();
-  const [isSignupLoading, setIsSignupLoading] = useState(false);
-
   const {
     register,
     handleSubmit,
-    setError,
     clearErrors,
     formState: { errors },
   } = useForm<IFormSignupInputs>({ resolver: yupResolver(schema) });
+
+  const { isSignUpLoading, onSubmit } = useSignUp();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -92,41 +88,6 @@ const Signup = () => {
     }
     setRemainAddress(splitAddress);
     setIsModalOpen(false);
-  };
-
-  const onSubmit = async (data: IFormSignupInputs) => {
-    setIsSignupLoading(true);
-
-    const { name, phone, address, detailAddress, email, nickName, password, petsitterBoolean } = data;
-
-    if (data.password !== data.passwordConfirm) {
-      setError('password', { type: 'dismatch', message: '비밀번호가 서로 다릅니다.' });
-      setError('passwordConfirm', { type: 'dismatch', message: '비밀번호가 서로 다릅니다.' });
-      setIsSignupLoading(false);
-      return;
-    }
-
-    try {
-      const { data, status } = await axios.post(`${apiUrl}/auth/local/register`, {
-        name,
-        phone,
-        address: `${address} ${detailAddress}`,
-        email,
-        nickName,
-        password,
-        petsitterBoolean,
-      });
-
-      if (status === 200) {
-        alert('가입을 축하합니다.');
-        navigate('/login');
-      }
-    } catch (e) {
-      console.log(e);
-      alert('회원 가입에 실패하였습니다. 다시 시도해 주세요.');
-    }
-
-    setIsSignupLoading(false);
   };
 
   return (
@@ -168,17 +129,17 @@ const Signup = () => {
             <CheckBoxLabel htmlFor="isPetsitter">펫시터로 가입하기</CheckBoxLabel>
           </CheckBoxWrapper>
 
-          <ButtonContainer>
+          <ButtonWrapper>
             <div style={{ position: 'relative' }}>
               <SubmitButton type="submit">펫밀리 등록</SubmitButton>
-              {isSignupLoading && (
+              {isSignUpLoading && (
                 <LoadingContainer>
                   <LoadingSpinner />
                 </LoadingContainer>
               )}
             </div>
             <GoogleOAuthButton>Sign up with Google</GoogleOAuthButton>
-          </ButtonContainer>
+          </ButtonWrapper>
         </SignUpForm>
       </SignupContainer>
       {isModalOpen && (

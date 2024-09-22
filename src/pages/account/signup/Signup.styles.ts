@@ -53,7 +53,7 @@ export const SignupInputStyle = styled.input<{ error: boolean | null }>`
   font-family: inherit;
 `;
 
-export const ButtonContainer = styled.div`
+export const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;

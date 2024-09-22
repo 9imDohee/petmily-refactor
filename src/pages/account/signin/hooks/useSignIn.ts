@@ -4,23 +4,23 @@ import { useDispatch } from 'react-redux';
 import { login } from 'redux/slice/userSlice';
 import { signIn } from 'apis/api/user';
 
-export function useSignIn() {
+function useSignIn() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [isLoginLoading, setIsLoginLoading] = useState(false);
+  const [isSignInLoading, setIsSignInLoading] = useState(false);
 
   const onSubmit = async (data: any) => {
-    setIsLoginLoading(true);
+    setIsSignInLoading(true);
     const status = await signIn(data);
     if (status === 200) {
       dispatch(login());
       navigate('/');
     }
-    setIsLoginLoading(false);
+    setIsSignInLoading(false);
   };
 
-  return { isLoginLoading, onSubmit };
+  return { isSignInLoading, onSubmit };
 }
 
 export default useSignIn;
